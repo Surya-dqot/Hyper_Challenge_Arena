@@ -1,60 +1,57 @@
-import { useState } from 'react';
 import { Target } from 'lucide-react';
+import { Routes, Route, NavLink, Link } from 'react-router-dom';
 import MainPage from './components/MainPage';
 import Contact from './components/Contact';
 import PrivacyPolicy from './components/PrivacyPolicy';
+import About from './components/About';
 import './App.css';
 
 function App() {
-  const [currentPage, setCurrentPage] = useState('main');
-
-  const renderPage = () => {
-    switch (currentPage) {
-      case 'main':
-        return <MainPage />;
-      case 'contact':
-        return <Contact />;
-      case 'privacy':
-        return <PrivacyPolicy />;
-      default:
-        return <MainPage />;
-    }
-  };
-
   return (
     <div className="app-container">
       {/* Standard Website Navbar */}
       <nav className="navbar">
-        <div className="nav-brand" onClick={() => setCurrentPage('main')}>
+        <Link to="/" className="nav-brand" style={{ textDecoration: 'none', color: 'inherit' }}>
           <Target className="brand-icon" size={24} />
           <span>HYPER CHALLENGE</span>
-        </div>
+        </Link>
         
         <div className="nav-links">
-          <button 
-            className={`nav-link ${currentPage === 'main' ? 'active' : ''}`}
-            onClick={() => setCurrentPage('main')}
+          <NavLink 
+            to="/" 
+            className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
           >
             Home
-          </button>
-          <button 
-            className={`nav-link ${currentPage === 'contact' ? 'active' : ''}`}
-            onClick={() => setCurrentPage('contact')}
+          </NavLink>
+          <NavLink 
+            to="/about" 
+            className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
+          >
+            About
+          </NavLink>
+          <NavLink 
+            to="/contact" 
+            className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
           >
             Contact
-          </button>
-          <button 
-            className={`nav-link ${currentPage === 'privacy' ? 'active' : ''}`}
-            onClick={() => setCurrentPage('privacy')}
+          </NavLink>
+          <NavLink 
+            to="/privacy-policy" 
+            className={({ isActive }) => `nav-link ${isActive ? 'active' : ''}`}
           >
             Privacy Policy
-          </button>
+          </NavLink>
         </div>
       </nav>
 
       {/* Main Content */}
       <main className="main-content">
-        {renderPage()}
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        </Routes>
       </main>
 
       {/* Standard Footer */}
@@ -66,3 +63,4 @@ function App() {
 }
 
 export default App;
+
